@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
     custom_origin_config {
       http_port = "${var.origin_http_port}"
       https_port = "${var.origin_https_port}"
-      origin_protocol_policy = "https_only" # Only talk to the origin over HTTPS
+      origin_protocol_policy = "https-only" # Only talk to the origin over HTTPS
       origin_ssl_protocols = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
   }
