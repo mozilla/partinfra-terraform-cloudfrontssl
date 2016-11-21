@@ -3,7 +3,7 @@ variable "origin_id" {}
 variable "alias" {}
 variable "acm_certificate_arn" {}
 variable "origin_path" {
-  default     = "/"
+  default     = ""
 }
 variable "origin_http_port" {
   default     = 80
