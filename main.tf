@@ -20,6 +20,10 @@ variable "comment" {
 variable "default_root_object" {
   default     = "index.html"
 }
+variable "compression" {
+  default     = false
+}
+
 
 resource "aws_cloudfront_distribution" "ssl_distribution" {
   origin {
@@ -45,6 +49,7 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "${var.origin_id}"
+    compress         = "${var.compression}"
 
     forwarded_values {
       query_string = false

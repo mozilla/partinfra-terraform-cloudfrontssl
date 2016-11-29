@@ -34,7 +34,7 @@ module "example" {
 | `distribution_enabled`           | Whether the CloudFront Distribution is enabled.  | no           |    `true` |
 | `comment`           | A comment to add to the distribution.  | no           |    |
 | `default_root_object`           | The object to return when a user requests the root URL.  | no           |  `index.html`  |
-
+| `compression` | Enable CloudFront to compress some files with gzip (and forward the `Accept-Encoding` header to the origin) | no | `false`
 ## Issues
 
 For issue tracking we use bugzilla.mozilla.org. [Create a bug][1] on bugzilla.mozilla.org under ``Participation Infrastructure > Community Ops`` component.
