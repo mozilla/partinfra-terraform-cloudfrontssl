@@ -65,6 +65,32 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
     max_ttl                = 3600
   }
 
+
+  cache_behavior {
+      allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      cached_methods   = ["GET", "HEAD"]
+      target_origin_id = "${var.origin_id}"
+      compress         = "${var.compression}"
+      path_pattern     = "/"
+      forwarded_values {
+        query_string = false
+
+        cookies {
+          forward = "none"
+        }
+      }
+
+      viewer_protocol_policy = "redirect-to-https"
+      min_ttl                = 0
+      default_ttl            = 360
+      max_ttl                = 3600
+
+      lambda_function_association {
+          event_type = "${var.headers["enabled"] ? "viewer-response" : ""}"
+          lambda_arn = "${var.headers["enabled"] ? aws_lambda_function.headers.arn : 0}"
+        }
+  }
+
   restrictions {
     geo_restriction {
         restriction_type = "none"
