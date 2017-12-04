@@ -24,7 +24,6 @@ variable "compression" {
   default     = false
 }
 
-
 resource "aws_cloudfront_distribution" "ssl_distribution" {
   origin {
     domain_name = "${var.origin_domain_name}"
@@ -87,7 +86,10 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
 
       lambda_function_association {
           event_type = "${var.headers["enabled"] ? "viewer-response" : ""}"
-          lambda_arn = "${var.headers["enabled"] ? aws_lambda_function.headers.arn : 0}"
+          // this currently does not work in Terraform
+          //lambda_arn = "${var.headers["enabled"] ? aws_lambda_function.headers.arn : ""}"
+          lambda_arn = "${aws_lambda_function.headers.arn}"
+
         }
   }
 

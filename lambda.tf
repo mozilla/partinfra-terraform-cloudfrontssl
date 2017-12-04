@@ -66,5 +66,5 @@ resource "aws_lambda_function" "headers" {
   handler = "index.handler"
   memory_size = 128
   timeout = 3
-  publish = true
+  publish = false
 }
