@@ -20,27 +20,6 @@ module "example" {
 }
 
 ```
-
-An example that enables some headers:
-```
-
-module "example" {
-  source              = "git://github.com/mozilla/partinfra-terraform-cloudfrontssl.git"
-
-  origin_domain_name  = "discourse.mozilla-community.org"
-  origin_id           = "discoursecdn"
-  alias               = "cdn.discourse.mozilla-community.org"
-  acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/00e371ce-a96e-435b-9e76-687ad6sa8231"
-
-  headers {
-        enabled = true
-        hsts-enabled = true
-        x-content-type-enabled = true
-        x-frame-options-enabled = true
-        x-xss-protection-enabled = true
-    }
-}
-```
 ## Reference
 
 | Variable              | Description                                                                                | Required     | Default  |
@@ -56,18 +35,6 @@ module "example" {
 | `comment`           | A comment to add to the distribution.  | no           |    |
 | `default_root_object`           | The object to return when a user requests the root URL.  | no           |  `index.html`  |
 | `compression` | Enable CloudFront to compress some files with gzip (and forward the `Accept-Encoding` header to the origin) | no | `false`
-| `headers` | A map of headers to enable (see below) | no | | |
-
-### Headers
-Add secure headers to every response, using Lambda@Edge (very basic, to be changed to allow any headers with any value to be added in the future)
-
-| Variable              | Description                                                                                | Required     | Default  |
-| -------------          |-------------                                                                               |----------    | ----- |
-| `enabled`     | Deploy a Lambda@Edge function to add headers to all responses                                                 | no          | `false` |
-| `hsts_enabled`     |`Strict-Transport-Security: max-age=63072000`                                                | no          | `false` |
-| `x-content-type-enabled`              | `X-Content-Type-Options: nosniff`                                                        | no          | `false` |
-| `x-frame-options-enabled`              | `X-Frame-Options: DENY`                                                        | no          | `false` |
-| `x-xss-protection-enabled`              | `X-XSS-Protection: 1; mode=block`                                                        | no          | `false` | |
 ## Issues
 
 For issue tracking we use bugzilla.mozilla.org. [Create a bug][1] on bugzilla.mozilla.org under ``Participation Infrastructure > Community Ops`` component.
