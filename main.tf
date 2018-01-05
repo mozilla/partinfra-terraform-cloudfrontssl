@@ -70,7 +70,7 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
       cached_methods   = ["GET", "HEAD"]
       target_origin_id = "${var.origin_id}"
       compress         = "${var.compression}"
-      path_pattern     = "/"
+      path_pattern     = "*"
       forwarded_values {
         query_string = false
 
@@ -88,7 +88,7 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
           event_type = "${var.headers["enabled"] ? "viewer-response" : ""}"
           // this currently does not work in Terraform
           //lambda_arn = "${var.headers["enabled"] ? aws_lambda_function.headers.arn : ""}"
-          lambda_arn = "${aws_lambda_function.headers.arn}"
+          lambda_arn = "${aws_lambda_function.headers.arn}:${aws_lambda_function.headers.version}"
 
         }
   }

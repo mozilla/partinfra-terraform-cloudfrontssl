@@ -58,7 +58,7 @@ resource "aws_iam_role_policy_attachment" "headers-function-role-policy" {
 
 resource "aws_lambda_function" "headers" {
   count = "${var.headers["enabled"] ? 1 : 0}"
-  function_name = "${var.alias}-headers"
+  function_name = "${replace(var.alias, ".", "-")}-headers"
   filename = "${data.archive_file.headers-function.output_path}"
   source_code_hash = "${data.archive_file.headers-function.output_base64sha256}"
   role = "${aws_iam_role.headers-function.arn}"
@@ -66,5 +66,5 @@ resource "aws_lambda_function" "headers" {
   handler = "index.handler"
   memory_size = 128
   timeout = 3
-  publish = false
+  publish = true
 }
