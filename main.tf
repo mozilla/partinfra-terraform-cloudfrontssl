@@ -23,6 +23,9 @@ variable "default_root_object" {
 variable "compression" {
   default     = false
 }
+variable "disable_404_caching" {
+  default     = false
+}
 
 
 resource "aws_cloudfront_distribution" "ssl_distribution" {
@@ -75,5 +78,12 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
     acm_certificate_arn = "${var.acm_certificate_arn}"
     ssl_support_method = "sni-only"
     minimum_protocol_version = "TLSv1"
+  }
+
+  if ${var.disable_404_caching} {
+    custom_error_response {
+      error_caching_min_ttl = 0
+      error_code = 404
+    }
   }
 }
