@@ -23,10 +23,10 @@ variable "default_root_object" {
 variable "compression" {
   default     = false
 }
-variable "disable_404_caching" {
-  default     = false
+variable "custom_error_response" {
+  type        = "list"
+  default     = []
 }
-
 
 resource "aws_cloudfront_distribution" "ssl_distribution" {
   origin {
@@ -80,10 +80,6 @@ resource "aws_cloudfront_distribution" "ssl_distribution" {
     minimum_protocol_version = "TLSv1"
   }
 
-  if ${var.disable_404_caching} {
-    custom_error_response {
-      error_caching_min_ttl = 0
-      error_code = 404
-    }
-  }
+  custom_error_response = ["${var.custom_error_response}"]
+
 }
